@@ -54,7 +54,10 @@ class YOLOai(ASMAI):
         results = self.model.predict(source=frame, conf=0.25, verbose=False)
         if len(results) == 0 or len(results[0].boxes) == 0:
             return None, None
-        label = self.current_labels[int(results[0].boxes.cls[0].item())]
+        print(results[0].names)
+        print(results[0].boxes[0].cls[0].item())
+        class_id = int(results[0].boxes[0].cls[0].item())
+        label = results[0].names[class_id]
         box = results[0].boxes[0]
         w = box.xywh[0][2].item()
         h = box.xywh[0][3].item()
